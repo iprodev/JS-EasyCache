@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JS-EasyCache</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+			}
+			textarea {
+				width: 400px;
+				height: 80px;
+			}
+		</style>
+		<script src="../easycache.js"></script>
+		<script>
+			function run(id) {
+				if(console && console.time) console.time('EasyCache');
+				var code = document.getElementById(id).value;
+				eval(code);
+				if(console && console.time) console.timeEnd('EasyCache');
+			}
+		</script>
+	</head>
+
+	<body>
+
+		<h1>JS-EasyCache</h1>
+
+		<p>The JS-EasyCache library is a simple library that emulates memcache functions using HTML5 localStorage, so that you can store items with an expiration date. These demos show its current functionality - set, get, remove.</p>
+
+		<p><b>Set memcache entries (most with expiration of 2 minutes):</b>
+			<br> (Check "Storage->Local Storage" in Chrome Dev Tools to see them stored.)</p>
+		<textarea id="set">
+EasyCache.set('forever', 'And Ever');
+EasyCache.set('greeting', 'Hiii!', 2);
+EasyCache.set('counter', 1, 2);
+EasyCache.set('data', {'name': 'Hemn', 'age': 26}, 2);
+		</textarea>
+		<br>
+		<button onclick="run('set')">Run</button>
+
+		<br>
+
+		<p><b>Retrieve EasyCache entries:</b>
+		</p>
+		<textarea id="get">
+console.log(EasyCache.get('forever'));
+console.log(EasyCache.get('greeting'));
+console.log(EasyCache.get('counter')+1);
+console.log(EasyCache.get('data').name);
+		</textarea>
+		<br>
+		<button onclick="run('get')">Run</button>
+
+		<br>
+
+		<p><b>Delete EasyCache entries and try to retrieve them:</b>
+		</p>
+		<textarea id="delete">
+EasyCache.remove('forever');
+EasyCache.remove('greeting');
+EasyCache.remove('counter');
+EasyCache.remove('data');
+console.log(EasyCache.get('greeting'));
+		</textarea>
+		<br>
+		<button onclick="run('delete')">Run</button>
+
+		<div id="result"></div>
+
+		<br>
+
+	</body>
+</html>
