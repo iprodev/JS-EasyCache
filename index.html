@@ -1,0 +1,222 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>JS-EasyCache by iprodev</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>JS-EasyCache</h1>
+        <p>An easy &amp; fast localStorage-based memcache-inspired client-side caching library with lossless data compression support.</p>
+
+        <p class="view"><a href="https://github.com/iprodev/JS-EasyCache">View the Project on GitHub <small>iprodev/JS-EasyCache</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/iprodev/JS-EasyCache/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/iprodev/JS-EasyCache/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/iprodev/JS-EasyCache">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="js-easycache" class="anchor" href="#js-easycache" aria-hidden="true"><span class="octicon octicon-link"></span></a>JS-EasyCache</h1>
+
+<p>This is a easy &amp; fast library that emulates <code>memcache</code> functions using HTML5 <code>localStorage</code> with lossless data compression support, so that you can cache data on the client
+and associate an expiration time with each piece of data. If the <code>localStorage</code> limit (~5MB) is exceeded, it tries to create space by removing the items that are closest to expiring anyway. If <code>localStorage</code> is not available at all in the browser, the library degrades by simply not caching and all cache requests return null.</p>
+
+<p>JS-EasyCache uses high-performance lossless data compression algorithm to make data stored size smaller so you can store more data to the <code>localStorage</code>.</p>
+
+<h2>
+<a id="methods" class="anchor" href="#methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods</h2>
+
+<p>The library exposes 9 methods: <code>set()</code>, <code>get()</code>, <code>remove()</code>, <code>flush()</code>, <code>flushExpired()</code>, <code>setBucket()</code>, <code>resetBucket()</code>, <code>supported()</code>, and <code>enableWarnings()</code>.</p>
+
+<hr>
+
+<h3>
+<a id="easycacheset" class="anchor" href="#easycacheset" aria-hidden="true"><span class="octicon octicon-link"></span></a>EasyCache.set</h3>
+
+<p>Stores the value in localStorage. Expires after specified number of minutes.</p>
+
+<h4>
+<a id="arguments" class="anchor" href="#arguments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Arguments</h4>
+
+<ol>
+<li>
+<code>key</code> (<strong>string</strong>)</li>
+<li>
+<code>value</code> (<strong>Object|string</strong>)</li>
+<li>
+<code>time</code> (<strong>number: optional</strong>)</li>
+</ol>
+
+<hr>
+
+<h3>
+<a id="easycacheget" class="anchor" href="#easycacheget" aria-hidden="true"><span class="octicon octicon-link"></span></a>EasyCache.get</h3>
+
+<p>Retrieves specified value from localStorage, if not expired.</p>
+
+<h4>
+<a id="arguments-1" class="anchor" href="#arguments-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Arguments</h4>
+
+<ol>
+<li>
+<code>key</code> (<strong>string</strong>)</li>
+</ol>
+
+<h4>
+<a id="returns" class="anchor" href="#returns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Returns</h4>
+
+<p><strong>string | Object</strong> : The stored value. If no value is available, null is returned.</p>
+
+<hr>
+
+<h3>
+<a id="easycacheremove" class="anchor" href="#easycacheremove" aria-hidden="true"><span class="octicon octicon-link"></span></a>EasyCache.remove</h3>
+
+<p>Removes a value from localStorage.</p>
+
+<h4>
+<a id="arguments-2" class="anchor" href="#arguments-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Arguments</h4>
+
+<ol>
+<li>
+<code>key</code> (<strong>string</strong>)</li>
+</ol>
+
+<hr>
+
+<h3>
+<a id="easycacheflush" class="anchor" href="#easycacheflush" aria-hidden="true"><span class="octicon octicon-link"></span></a>EasyCache.flush</h3>
+
+<p>Removes all EasyCache items from localStorage without affecting other data.</p>
+
+<hr>
+
+<h3>
+<a id="easycachesetbucket" class="anchor" href="#easycachesetbucket" aria-hidden="true"><span class="octicon octicon-link"></span></a>EasyCache.setBucket</h3>
+
+<p>Appends CACHE_PREFIX so EasyCache will partition data in to different buckets</p>
+
+<h4>
+<a id="arguments-3" class="anchor" href="#arguments-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Arguments</h4>
+
+<ol>
+<li>
+<code>bucket</code> (<strong>string</strong>)</li>
+</ol>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>The interface should be familiar to those of you who have used <code>memcache</code>, and should be easy to understand for those of you who haven't.</p>
+
+<p>For example, you can store a string for 2 minutes using <code>EasyCache.set()</code>:</p>
+
+<div class="highlight highlight-js"><pre>EasyCache.set(<span class="pl-s"><span class="pl-pds">'</span>greeting<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Hello World!<span class="pl-pds">'</span></span>, <span class="pl-c1">2</span>);</pre></div>
+
+<p>You can then retrieve that string with <code>EasyCache.get()</code>:</p>
+
+<div class="highlight highlight-js"><pre><span class="pl-c1">alert</span>(EasyCache.get(<span class="pl-s"><span class="pl-pds">'</span>greeting<span class="pl-pds">'</span></span>));</pre></div>
+
+<p>You can remove that string from the cache entirely with <code>EasyCache.remove()</code>:</p>
+
+<div class="highlight highlight-js"><pre>EasyCache.remove(<span class="pl-s"><span class="pl-pds">'</span>greeting<span class="pl-pds">'</span></span>);</pre></div>
+
+<p>You can remove all items from the cache entirely with <code>EasyCache.flush()</code>:</p>
+
+<div class="highlight highlight-js"><pre>EasyCache.flush();</pre></div>
+
+<p>You can remove only expired items from the cache entirely with <code>EasyCache.flushExpired()</code>:</p>
+
+<div class="highlight highlight-js"><pre>EasyCache.flushExpired();</pre></div>
+
+<p>Returns whether local storage is supported.:</p>
+
+<div class="highlight highlight-js"><pre><span class="pl-c1">alert</span>(EasyCache.supported());</pre></div>
+
+<p>The library also takes care of serializing objects, so you can store more complex data:</p>
+
+<div class="highlight highlight-js"><pre>EasyCache.set(<span class="pl-s"><span class="pl-pds">'</span>data<span class="pl-pds">'</span></span>, {<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Hemn<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>age<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-c1">26</span>}, <span class="pl-c1">2</span>);</pre></div>
+
+<p>And then when you retrieve it, you will get it back as an object:</p>
+
+<div class="highlight highlight-js"><pre><span class="pl-c1">alert</span>(EasyCache.get(<span class="pl-s"><span class="pl-pds">'</span>data<span class="pl-pds">'</span></span>).<span class="pl-c1">name</span>);</pre></div>
+
+<p>If you have multiple instances of EasyCache running on the same domain, you can partition data in a certain bucket via:</p>
+
+<div class="highlight highlight-js"><pre>EasyCache.set(<span class="pl-s"><span class="pl-pds">'</span>response<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>...<span class="pl-pds">'</span></span>, <span class="pl-c1">2</span>);
+EasyCache.setBucket(<span class="pl-s"><span class="pl-pds">'</span>lib<span class="pl-pds">'</span></span>);
+EasyCache.set(<span class="pl-s"><span class="pl-pds">'</span>path<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>...<span class="pl-pds">'</span></span>, <span class="pl-c1">2</span>);
+EasyCache.flush(); <span class="pl-c">// Only removes 'path' which was set in the lib bucket</span>
+EasyCache.resetBucket();
+EasyCache.flush(); <span class="pl-c">// Remove all EasyCache items and expiry markers without affecting rest of localStorage</span></pre></div>
+
+<p>For more live examples, play around with the demo here:
+<a href="http://iprodev.github.io/JS-EasyCache/demo/index.html">http://iprodev.github.io/JS-EasyCache/demo/index.html</a></p>
+
+<h2>
+<a id="real-world-usage" class="anchor" href="#real-world-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Real-World Usage</h2>
+
+<p>This library was originally developed with the use case of caching results of JSON API queries
+to speed up my webapps and give them better protection against flaky APIs.</p>
+
+<p>For example use <code>EasyCache</code> to fetch Youtube API results for 10 minutes:</p>
+
+<div class="highlight highlight-js"><pre><span class="pl-k">var</span> key <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>youtube:<span class="pl-pds">'</span></span> <span class="pl-k">+</span> query;
+<span class="pl-k">var</span> json <span class="pl-k">=</span> EasyCache.get(key);
+<span class="pl-k">if</span> (json) {
+  processJSON(json);
+} <span class="pl-k">else</span> {
+  fetchJSON(query);
+}
+
+<span class="pl-k">function</span> <span class="pl-en">processJSON</span>(<span class="pl-smi">json</span>) {
+  <span class="pl-c">// ..</span>
+}
+
+<span class="pl-k">function</span> <span class="pl-en">fetchJSON</span>() {
+  <span class="pl-k">var</span> searchUrl <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>http://gdata.youtube.com/feeds/api/videos<span class="pl-pds">'</span></span>;
+  <span class="pl-k">var</span> params <span class="pl-k">=</span> {
+   <span class="pl-s"><span class="pl-pds">'</span>v<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>2<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>alt<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>jsonc<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>q<span class="pl-pds">'</span></span><span class="pl-k">:</span> encodeURIComponent(query)
+  }
+  <span class="pl-c1">JSONP</span>.get(searchUrl, params, <span class="pl-c1">null</span>, <span class="pl-k">function</span>(<span class="pl-smi">json</span>) {
+    processJSON(json);
+    EasyCache.set(key, json, <span class="pl-c1">10</span>);
+  });
+}</pre></div>
+
+<p>It does not have to be used for only expiration-based caching, however. It can also be used as just a wrapper for <code>localStorage</code>, as it provides the benefit of handling JS object (de-)serialization.</p>
+
+<h2>
+<a id="browser-support" class="anchor" href="#browser-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browser Support</h2>
+
+<p>The <code>EasyCache</code> library should work in all browsers where <code>localStorage</code> is supported.
+A list of those is here:
+<a href="http://caniuse.com/#search=localstorage">http://caniuse.com/#search=localstorage</a></p>
+
+<h2>
+<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Credits</h2>
+
+<p>JS-EasyCache was created by <a href="http://iprodev.com">Hemn Chawroka</a> from <a href="http://iprodev.com">iProDev</a>. Released under the MIT license.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/iprodev">iprodev</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
