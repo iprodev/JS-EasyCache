@@ -113,7 +113,7 @@ EasyCache.flush(); // Remove all EasyCache items and expiry markers without affe
 ```
 
 For more live examples, play around with the demo here:
-http://iprodev.github.io/JS-EasyCache/demo/index.html
+http://iprodev.github.io/JS-EasyCache/demo.html
 
 
 Real-World Usage
