@@ -5,6 +5,17 @@ and associate an expiration time with each piece of data. If the `localStorage` 
 
 JS-EasyCache uses high-performance lossless data compression algorithm to make data stored size smaller so you can store more data to the `localStorage`.
 
+
+
+Install with Bower
+-------
+You can also install it using Bower:
+
+```
+$ bower install EasyCache
+```
+
+
 Methods
 -------
 
